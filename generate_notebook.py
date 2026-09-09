@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 from pathlib import Path
 
 
@@ -486,3 +487,33 @@ with (ROOT / "uk_road_safety_eda.ipynb").open("w", encoding="utf-8") as file:
     json.dump(nb, file, indent=1, ensure_ascii=False)
 
 print(f"Created {ROOT / 'uk_road_safety_eda.ipynb'}")
+
+kaggle_nb = deepcopy(nb)
+kaggle_nb["metadata"].pop("colab", None)
+kaggle_nb["cells"].insert(1, {
+    "cell_type": "markdown",
+    "metadata": {},
+    "source": [
+        "## Kaggle setup\n",
+        "\n",
+        "Add the two official CSV files to Kaggle as a dataset named `uk-road-safety-2025`, "
+        "then attach that dataset to this notebook.\n",
+    ],
+})
+
+for cell in kaggle_nb["cells"]:
+    if cell["cell_type"] == "code":
+        source = "".join(cell["source"])
+        source = source.replace(
+            '"dft-road-casualty-statistics-collision-2025.csv"',
+            '"/kaggle/input/uk-road-safety-2025/dft-road-casualty-statistics-collision-2025.csv"',
+        )
+        source = source.replace(
+            '"dft-road-casualty-statistics-casualty-2025.csv"',
+            '"/kaggle/input/uk-road-safety-2025/dft-road-casualty-statistics-casualty-2025.csv"',
+        )
+        cell["source"] = source.splitlines(keepends=True)
+
+with (ROOT / "uk_road_safety_eda_kaggle.ipynb").open("w", encoding="utf-8") as file:
+    json.dump(kaggle_nb, file, indent=1, ensure_ascii=False)
+print(f"Created {ROOT / 'uk_road_safety_eda_kaggle.ipynb'}")

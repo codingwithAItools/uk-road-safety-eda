@@ -36,10 +36,12 @@ uk-road-safety-eda/
 
 1. Download the 2025 **Collisions** and **Casualties** CSV files from the [DfT Road Safety Open Data page](https://www.gov.uk/government/statistical-data-sets/road-safety-open-data).
 2. Open `uk_road_safety_eda.ipynb` in Google Colab.
-3. Upload both CSV files to the Colab session.
+3. Upload both CSV files to the Colab session and keep these original filenames:
+   - `dft-road-casualty-statistics-collision-2025.csv`
+   - `dft-road-casualty-statistics-casualty-2025.csv`
 4. Select **Runtime > Run all**.
 
-The loader identifies the files from their columns, so the downloaded filenames do not need to be changed.
+The notebook follows the course exemplars and loads each file directly with `pd.read_csv("filename.csv")`.
 
 ## Data source
 
@@ -61,4 +63,3 @@ Available under the Open Government Licence v3.0.
 ## Tools
 
 Python, pandas, NumPy, Matplotlib, Seaborn, Jupyter and Google Colab.
-

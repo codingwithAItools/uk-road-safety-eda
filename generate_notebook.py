@@ -64,7 +64,6 @@ A road-safety policy team wants an accessible overview of when and where serious
 """)
 
 code("""
-from pathlib import Path
 import re
 import warnings
 
@@ -87,9 +86,9 @@ GREEN = "#059669"
 md("""
 ## PACE: Analyse
 
-### Load and identify the two CSV files
+### Load the two CSV files
 
-Upload the 2025 collision and casualty files to Colab, or place them in the repository's `data` folder. The loader identifies each file from its columns instead of depending on a particular filename.
+Upload the two 2025 CSV files to Colab without changing their downloaded filenames. As in the course exemplars, each dataset is loaded with one direct `pd.read_csv()` statement.
 """)
 
 code("""
@@ -101,46 +100,8 @@ def standardise_columns(columns):
         cleaned.append(name)
     return cleaned
 
-search_folders = [Path("/content"), Path("data")]
-csv_files = sorted({
-    file.resolve()
-    for folder in search_folders if folder.exists()
-    for file in folder.glob("*.csv")
-})
-
-if not csv_files:
-    raise FileNotFoundError(
-        "No CSV files found. Upload the 2025 collision and casualty CSV files to Colab, "
-        "or place them in the data folder."
-    )
-
-collision_file = None
-casualty_file = None
-
-for file in csv_files:
-    preview = pd.read_csv(file, nrows=3, low_memory=False)
-    preview.columns = standardise_columns(preview.columns)
-    columns = set(preview.columns)
-
-    if {"casualty_reference", "casualty_severity"}.issubset(columns):
-        casualty_file = file
-    elif ({"collision_severity", "date"}.issubset(columns)
-          or {"accident_severity", "date"}.issubset(columns)):
-        collision_file = file
-
-if collision_file is None or casualty_file is None:
-    raise FileNotFoundError(
-        "The collision and casualty files could not both be identified. "
-        "Check that you uploaded the two correct 2025 CSV files."
-    )
-
-print(f"Collision file: {collision_file.name}")
-print(f"Casualty file:  {casualty_file.name}")
-""")
-
-code("""
-collisions = pd.read_csv(collision_file, low_memory=False)
-casualties = pd.read_csv(casualty_file, low_memory=False)
+collisions = pd.read_csv("dft-road-casualty-statistics-collision-2025.csv")
+casualties = pd.read_csv("dft-road-casualty-statistics-casualty-2025.csv")
 
 collisions.columns = standardise_columns(collisions.columns)
 casualties.columns = standardise_columns(casualties.columns)

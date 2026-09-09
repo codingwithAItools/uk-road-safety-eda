@@ -22,6 +22,7 @@ Which temporal, environmental, road and demographic factors are associated with 
 ```text
 uk-road-safety-eda/
 ├── uk_road_safety_eda.ipynb
+├── uk_road_safety_eda_kaggle.ipynb
 ├── README.md
 ├── requirements.txt
 ├── LICENSE
@@ -42,6 +43,15 @@ uk-road-safety-eda/
 4. Select **Runtime > Run all**.
 
 The notebook follows the course exemplars and loads each file directly with `pd.read_csv("filename.csv")`.
+
+## Run on Kaggle
+
+1. Create a Kaggle dataset named `uk-road-safety-2025` containing the two official CSV files.
+2. Open `uk_road_safety_eda_kaggle.ipynb` on Kaggle.
+3. Select **Add Input** and attach your dataset.
+4. Select **Run All**.
+
+The Kaggle notebook loads the files directly from `/kaggle/input/uk-road-safety-2025/`.
 
 ## Data source
 
